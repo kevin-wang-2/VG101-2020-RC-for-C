@@ -16,11 +16,11 @@ int main() {
 }
 ```
 
-![image-20201103172133054](C:\Users\22490\AppData\Roaming\Typora\typora-user-images\image-20201103172133054.png)(GCC Compilation)
+![image-20201103172133054](image-20201103172133054.png)(GCC Compilation)
 
 or
 
-![image-20201103172047165](C:\Users\22490\AppData\Roaming\Typora\typora-user-images\image-20201103172047165.png)(MinGW Compilation)
+![image-20201103172047165](image-20201103172047165.png)(MinGW Compilation)
 
 ### How to Get & Store a Variable's Memory
 
@@ -125,7 +125,7 @@ int main() {
 }
 ```
 
-![image-20201103171820269](C:\Users\22490\AppData\Roaming\Typora\typora-user-images\image-20201103171820269.png)
+![image-20201103171820269](image-20201103171820269.png)
 
 If we use integer as function argument, we could access local variable from another function (Compiled by GCC).
 
@@ -149,7 +149,7 @@ int main() {
 }
 ```
 
-![image-20201103171413516](C:\Users\22490\AppData\Roaming\Typora\typora-user-images\image-20201103171413516.png)
+![image-20201103171413516](image-20201103171413516.png)
 
 So we could use swap to change local variables of main function.
 
@@ -590,5 +590,74 @@ int BFS(tree T) {
 }
 ```
 
+**Example:**
 
+(FA18 Final Question)
+
+Given a graph of ASCII art, which only contains "#" and "*" character, and given two numbers that is the coordinate of the graph. Fill the connecting region from that point with " ".
+
+**Input:**
+
+1. The width and height of the graph
+2. A Graph
+3. A pair of integers.
+
+```C
+#include <stdio.h>
+
+typedef struct Point {
+    int x, y;
+} Point;
+
+int main() {
+    int width, height;
+    scanf("%d %d", &width, &height);
+    getchar();
+
+    char graph[50][50];
+    for (int i = 0; i < height; i++) {
+        scanf("%[^\n]\n", graph[i]);
+    }
+
+    int x, y;
+    scanf("%d %d", &x, &y);
+
+    char identifier = graph[x][y];
+    char closed[50][50] = {0};
+
+    Point queue[255];
+    int front = 0, rear = 0;
+
+    queue[rear].x = x;
+    queue[rear++].y = y;
+
+    while (rear != front) {
+        Point cur = queue[(front++) % 255];
+        graph[cur.x][cur.y] = '#';
+
+        if (cur.x - 1 >= 0 && closed[cur.x - 1][cur.y] == 0 && graph[cur.x - 1][cur.y] == identifier) {
+            queue[rear % 255].x = cur.x - 1;
+            queue[(rear++) % 255].y = cur.y;
+            closed[cur.x - 1][cur.y] = 1;
+        }
+        if (cur.y - 1 >= 0 && closed[cur.x][cur.y - 1] == 0 && graph[cur.x][cur.y - 1] == identifier) {
+            queue[rear % 255].x = cur.x;
+            queue[(rear++) % 255].y = cur.y - 1;
+            closed[cur.x][cur.y - 1] = 1;
+        }
+        if (cur.x + 1 < height && closed[cur.x + 1][cur.y] == 0 && graph[cur.x + 1][cur.y] == identifier) {
+            queue[rear % 255].x = cur.x + 1;
+            queue[(rear++) % 255].y = cur.y;
+            closed[cur.x + 1][cur.y] = 1;
+        }
+        if (cur.y + 1 < width && closed[cur.x][cur.y + 1] == 0 && graph[cur.x][cur.y + 1] == identifier) {
+            queue[rear % 255].x = cur.x;
+            queue[(rear++) % 255].y = cur.y + 1;
+            closed[cur.x][cur.y + 1] = 1;
+        }
+    }
+
+    for (int i = 0; i < height; i++) printf("%s\n", graph[i]);
+}
+```
 
