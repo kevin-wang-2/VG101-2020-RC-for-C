@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.10)
+project(pointer C)
+
+set(CMAKE_C_STANDARD 99)
+
+add_executable(mem_distribution memd.c)
+add_executable(think1 think1.c)
+add_executable(think2 think2.c)
+add_executable(functioncall_mem_distribution fcmemd.c)
+add_executable(functioncall_pointer fcptr.c)
+add_executable(wild_pointer wptr.c)
+add_executable(find_non_dup_substr findNDS.c)
+add_executable(survive_desert DFS1.c)
+add_executable(egyptian_fraction DFS2.c)
+add_executable(coloring BFS.c)
